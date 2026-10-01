@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sorteos del Gabo</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:Arial,Helvetica,sans-serif;
+  background:#080808;color:#fff;
+}
+.hero{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(255,193,7,.18),transparent 35%),
+    linear-gradient(180deg,#111 0%,#050505 100%);
+  padding:28px 16px 50px;
+}
+.container{max-width:1050px;margin:auto}
+.logo{
+  text-align:center;font-size:clamp(34px,8vw,72px);font-weight:900;
+  letter-spacing:2px;color:#ffd21c;text-shadow:0 4px 0 #6d4d00,0 0 25px rgba(255,210,28,.25);
+}
+.subtitle{text-align:center;color:#ddd;font-size:18px;margin:8px auto 28px}
+.badge{
+  margin:auto;max-width:700px;text-align:center;padding:15px 20px;
+  border:1px solid #ffd21c;border-radius:16px;background:rgba(255,210,28,.08);
+  font-weight:700;font-size:20px;
+}
+.prizes{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px
+}
+.card{
+  background:linear-gradient(145deg,#181818,#0d0d0d);border:1px solid #333;
+  border-radius:22px;padding:24px;text-align:center;box-shadow:0 15px 35px rgba(0,0,0,.35)
+}
+.place{font-size:18px;color:#ffd21c;font-weight:800}
+.emoji{font-size:70px;margin:12px}
+.card h2{margin:5px 0;font-size:24px}
+.price{
+  margin:30px auto 18px;text-align:center;background:#ffd21c;color:#111;
+  padding:18px;border-radius:16px;font-size:28px;font-weight:900;max-width:430px
+}
+.numbers{
+  background:#101010;border:1px solid #292929;border-radius:22px;padding:25px;margin-top:25px
+}
+.numbers h2{text-align:center;margin-top:0}
+.grid{display:grid;grid-template-columns:repeat(10,1fr);gap:7px}
+.num{
+  padding:9px 3px;text-align:center;border-radius:8px;background:#202020;
+  color:#eee;font-size:13px;border:1px solid #333
+}
+.cta{text-align:center;margin-top:30px}
+.cta h2{font-size:28px}
+.btn{
+ display:inline-block;background:#20c76b;color:white;text-decoration:none;
+ padding:17px 30px;border-radius:13px;font-weight:900;font-size:20px;
+ box-shadow:0 8px 20px rgba(32,199,107,.22)
+}
+.small{color:#aaa;font-size:13px;margin-top:15px}
+.selectedBox{
+  margin:0 auto 18px;padding:14px;border-radius:12px;background:#181818;
+  border:1px solid #333;text-align:center;color:#ddd
+}
+#selectedNumbers{color:#ffd21c;margin-left:6px;font-weight:800}
+.num{cursor:pointer;user-select:none;transition:.15s}
+.num.selected{background:#ffd21c;color:#111;border-color:#ffd21c;font-weight:900}
+.num.reserved{background:#3b1717;color:#777;border-color:#4b2424;cursor:not-allowed;text-decoration:line-through}
+.reserveBtn{
+  display:block;width:100%;margin-top:20px;padding:16px;border:0;border-radius:12px;
+  background:#20c76b;color:#fff;font-size:17px;font-weight:900;cursor:pointer
+}
+.reserveBtn:disabled{background:#333;color:#777;cursor:not-allowed}
+.notice{text-align:center;margin-top:12px;color:#aaa;font-size:14px;min-height:20px}
+footer{text-align:center;color:#777;margin-top:40px;font-size:13px}
+@media(max-width:700px){
+ .prizes{grid-template-columns:1fr}
+ .grid{grid-template-columns:repeat(5,1fr)}
+ .logo{font-size:40px}
+}
+</style>
+</head>
+<body>
+<section class="hero">
+<div class="container">
+  <div class="logo">SORTEOS DEL GABO</div>
+  <div class="subtitle">Tu oportunidad de llevarte premios increíbles.</div>
+
+  <div class="badge">🎟️ SOLO 200 NÚMEROS DISPONIBLES</div>
+
+  <div class="prizes">
+    <div class="card">
+      <div class="place">1er LUGAR</div>
+      <div class="emoji">🏍️</div>
+      <h2>Ducati Monster</h2>
+    </div>
+    <div class="card">
+      <div class="place">2do LUGAR</div>
+      <div class="emoji">🚙</div>
+      <h2>Jeep Grand Cherokee</h2>
+    </div>
+    <div class="card">
+      <div class="place">3er LUGAR</div>
+      <div class="emoji">🏎️</div>
+      <h2>Ford Mustang</h2>
+    </div>
+  </div>
+
+  <div class="price">🎟️ BOLETO: $2,500 MXN</div>
+
+  <div class="numbers">
+    <h2>Elige tu número</h2>
+    <div class="selectedBox" id="selectedBox">
+  <strong>Números seleccionados:</strong>
+  <span id="selectedNumbers">Ninguno</span>
+</div>
+<div class="grid" id="numbers"></div>
+<button class="reserveBtn" id="reserveBtn" type="button" disabled>
+  📲 APARTAR NÚMEROS SELECCIONADOS
+</button>
+<div class="notice" id="notice"></div>
+  </div>
+
+  <div class="cta">
+    <h2>¿Quieres apartar tu boleto?</h2>
+    <p>Selecciona tu número y escríbenos por WhatsApp para apartarlo.</p>
+    <a class="btn" href="https://wa.me/523334492546?text=Hola%20Sorteos%20del%20Gabo%2C%20quiero%20apartar%20un%20boleto." target="_blank">
+      📲 APARTAR POR WHATSAPP
+    </a>
+    <div class="small">WhatsApp: 33 34 49 25 46</div>
+  </div>
+
+  <footer>SORTEOS DEL GABO · 200 números · Sin fecha publicada</footer>
+</div>
+</section>
+
+<script>
+const grid=document.getElementById('numbers');
+const selectedNumbers=document.getElementById('selectedNumbers');
+const reserveBtn=document.getElementById('reserveBtn');
+const notice=document.getElementById('notice');
+const selected=new Set();
+
+function renderSelected(){
+  const values=[...selected].sort((a,b)=>a-b);
+  selectedNumbers.textContent=values.length
+    ? values.map(n=>String(n).padStart(3,'0')).join(', ')
+    : 'Ninguno';
+  reserveBtn.disabled=values.length===0;
+}
+for(let i=1;i<=200;i++){
+  const n=document.createElement('button');
+  n.type='button';
+  n.className='num';
+  n.textContent=String(i).padStart(3,'0');
+  n.setAttribute('aria-label','Número '+i);
+  n.addEventListener('click',()=>{
+    if(n.classList.contains('reserved')) return;
+    if(selected.has(i)){selected.delete(i);n.classList.remove('selected')}
+    else{selected.add(i);n.classList.add('selected')}
+    renderSelected();
+  });
+  grid.appendChild(n);
+}
+reserveBtn.addEventListener('click',()=>{
+  const values=[...selected].sort((a,b)=>a-b);
+  if(!values.length)return;
+  const formatted=values.map(n=>String(n).padStart(3,'0')).join(', ');
+  const total=(values.length*2500).toLocaleString('es-MX');
+  const message=`Hola Sorteos del Gabo. Quiero apartar los números: ${formatted}.\n\nCantidad: ${values.length}\nTotal: $${total} MXN\n\nQuedo pendiente para confirmar mi apartado.`;
+  window.open('https://wa.me/523334492546?text='+encodeURIComponent(message),'_blank');
+  notice.textContent='Se abrió WhatsApp con tus números listos para enviar. El apartado queda pendiente de confirmación.';
+});
+</script>
+</body>
+</html>
